@@ -15,5 +15,24 @@ package q004;
  * - ListManagerクラスの比較 compare と入れ替え exchange を使って実現してください
  */
 public class Q004 {
+    public static void main(String[] args) {
+        var data = new ListManager();
+        int index = 0;
+        while(true) {
+            if(index == data.size() - 1) {
+                try {
+                    data.checkResult();
+                    break;
+                } catch (RuntimeException e) {
+                    index = 0;
+                    continue;
+                }
+            }
+            if(data.compare(index, index + 1) == 1) {
+                data.exchange(index, index + 1);
+            }
+            index++;
+        }
+    }
 }
-// 完成までの時間: xx時間 xx分
+// 完成までの時間: xx時間 10分

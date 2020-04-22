@@ -1,5 +1,8 @@
 package q002;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * Q002 並べ替える
  *
@@ -45,5 +48,16 @@ public class Q002 {
             "14,林",
             "9,清水"
     };
+
+    public static void main(String[] args) {
+        Arrays.stream(dataList)
+                .sorted(Comparator.comparing(Q002::getIndex))
+                .forEach(System.out::println);
+    }
+
+    private static int getIndex(String line) {
+        var index = line.split(",");
+        return Integer.parseInt(index[0]);
+    }
 }
-// 完成までの時間: xx時間 xx分
+// 完成までの時間: 0時間 15分
