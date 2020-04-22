@@ -5,6 +5,7 @@ import q006.value.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Stack;
 
 /**
@@ -31,8 +32,10 @@ import java.util.Stack;
 public class Q006 {
 
     public static void main(String[] args) {
-        var paramStr = "3 1.1 0.9 + 2.0 * -";
-        var resultList = parseLine(paramStr);
+        System.out.print("> ");
+        var scan = new Scanner(System.in);
+        var resultList = parseLine(scan.nextLine());
+        scan.close();
         var stack = new Stack<BigDecimal>();
         for(var result : resultList) {
             result.execute(stack);
