@@ -1,6 +1,14 @@
 package q003;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Q003 集計と並べ替え
@@ -26,12 +34,36 @@ ignorance=1
  * http://eikaiwa.dmm.com/blog/4690/
  */
 public class Q003 {
+
+    public static void main(String[] args) throws IOException {
+        var path = Paths.get("src/main/resources/q003/data.txt");
+        List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+        var sb = new StringBuilder();
+        for(var line : lines) {
+            sb.append(line);
+            sb.append(" ");
+        }
+        var fileStr = sb.toString();
+        fileStr = fileStr.replaceAll("[;.,]", "");
+        var words = fileStr.split(" ");
+        Map<String, Integer> resultMap = new HashMap<>();
+        for(var word : words) {
+            if(resultMap.containsKey(word)) {
+                resultMap.replace(word, resultMap.get(word) + 1);
+            } else {
+                resultMap.put(word, 1);
+            }
+        }
+        resultMap.forEach((word, count) -> System.out.println(word + "=" + count));
+    }
+
     /**
      * データファイルを開く
      * resources/q003/data.txt
      */
     private static InputStream openDataFile() {
+        //コンパイルしないと読めない？
         return Q003.class.getResourceAsStream("data.txt");
     }
 }
-// 完成までの時間: xx時間 xx分
+// 完成までの時間: 0時間 25分

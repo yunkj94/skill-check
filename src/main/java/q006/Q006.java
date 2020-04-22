@@ -1,11 +1,11 @@
 package q006;
 
-import q006.value.DecimalValue;
-import q006.value.IValue;
-import q006.value.PlusValue;
+import q006.value.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Q006 空気を読んで改修
@@ -29,6 +29,17 @@ import java.util.List;
  * （または -1.00 など、小数点に0がついてもよい）
  */
 public class Q006 {
+
+    public static void main(String[] args) {
+        var paramStr = "3 1.1 0.9 + 2.0 * -";
+        var resultList = parseLine(paramStr);
+        var stack = new Stack<BigDecimal>();
+        for(var result : resultList) {
+            result.execute(stack);
+        }
+        System.out.println(stack.pop());
+    }
+
     /**
      * 逆ポーランドで記載された1行のテキストを分解する
      * @param lineText 1行テキスト
@@ -43,6 +54,15 @@ public class Q006 {
                 case "+":   // 足し算
                     resultList.add(new PlusValue());
                     break;
+                case "-":
+                    resultList.add(new MinusValue());
+                    break;
+                case "*":
+                    resultList.add(new MultipleValue());
+                    break;
+                case "/":
+                    resultList.add(new DivideValue());
+                    break;
                 default:    // その他は数値として扱う
                     resultList.add(new DecimalValue(text));
                     break;
@@ -51,4 +71,4 @@ public class Q006 {
         return resultList;
     }
 }
-// 完成までの時間: xx時間 xx分
+// 完成までの時間: 0時間 30分

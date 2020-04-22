@@ -1,5 +1,7 @@
 package q007;
 
+import java.util.Objects;
+
 /**
  * q007 最短経路探索
  *
@@ -26,5 +28,25 @@ XXXXXXXXX
 14
  */
 public class Q007 {
+    private static final int ERROR_CODE = -1;
+
+    public static void main(String[] args) {
+        var mazeStream = new MazeInputStream();
+        var mazeStr = new String(mazeStream.readAllBytes());
+        System.out.println(mazeStr);
+
+        var tmpArray = mazeStr.split("\n");
+        var mazeArray = new String[tmpArray.length][];
+        for (var i = 0; i < tmpArray.length; i++) {
+            mazeArray[i] = tmpArray[i].split("");
+        }
+        var resolveMaze = new ResolveMaze(mazeArray);
+        System.out.println("[Answer]");
+        if(Objects.isNull(resolveMaze.getCorrectPosition())) {
+            System.out.println(ERROR_CODE);
+        } else {
+            System.out.println(resolveMaze.getCorrectPosition().getMoveCount());
+        }
+    }
 }
 // 完成までの時間: xx時間 xx分
