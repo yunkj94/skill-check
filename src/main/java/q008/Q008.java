@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -27,6 +28,28 @@ Q004.java(13): Pattern pattern = Pattern.compile("(\".*\")|(\'.*\')");
 
  */
 public class Q008 {
+    private static String[] checkWords = new String[]{"test", "TEST", "aa", ".*"};
+
+    public static void main(String[] args) throws IOException {
+            var fileList = listJavaFiles().collect(Collectors.toList());
+            for(var file : fileList) {
+                try {
+                    var fileLines = Files.readAllLines(file.toPath());
+                    int lineCount = 1;
+                    for(var line : fileLines) {
+                        for(var checkWord : checkWords) {
+                            if(line.contains(checkWord)) {
+                                System.out.println(file.getName() + "(" + lineCount + "): " + line);
+                            }
+                        }
+                        lineCount++;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+    }
+
     /**
      * JavaファイルのStreamを作成する
      *
@@ -37,4 +60,5 @@ public class Q008 {
         return Files.walk(Paths.get(".")).map(Path::toFile).filter(f -> f.getName().endsWith(".java"));
     }
 }
-// 完成までの時間: xx時間 xx分
+
+// 完成までの時間: 50分
