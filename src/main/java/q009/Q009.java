@@ -1,5 +1,9 @@
 package q009;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  * Q009 重い処理を別スレッドで実行
  *
@@ -22,5 +26,27 @@ package q009;
 12345: 3,5,823
  */
 public class Q009 {
+    public static void main(String[] args) {
+        var calculateList = new ArrayList<Calculate>();
+
+        while(true) {
+            System.out.print("入力) ");
+            var scan = new Scanner(System.in);
+            var scanStr = scan.nextLine();
+            if(scanStr.isEmpty()) {
+                calculateList.forEach(calculate -> {
+                    if(!calculate.getIsNoDisplay()) {
+                        System.out.println(calculate.getResult());
+                    }
+                });
+            } else {
+                var scanVal = new BigInteger(scanStr);
+                calculateList.add(new Calculate(scanVal));
+                var thread = new Thread(calculateList.get(calculateList.size() - 1));
+                thread.start();
+            }
+        }
+    }
 }
-// 完成までの時間: xx時間 xx分
+//13:30
+// 完成までの時間: 3時間
